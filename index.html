@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine 💖</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(135deg, #ffb6c1, #ffe6f0);
+        overflow: hidden;
+    }
+
+    .container {
+        text-align: center;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    #message {
+        min-height: 24px;
+        margin: 10px 0;
+        color: #c2185b;
+    }
+
+    button {
+        padding: 14px 30px;
+        font-size: 18px;
+        margin: 10px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    #yes {
+        background: #ff4081;
+        color: white;
+    }
+
+    #no {
+        background: #e0e0e0;
+    }
+
+    #gif {
+        display: none;
+        margin-top: 25px;
+        animation: slideUp 0.6s ease forwards;
+    }
+
+    @keyframes slideUp {
+        from {
+            transform: translateY(40px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .heart {
+        position: absolute;
+        font-size: 22px;
+        animation: floatUp 3s linear forwards;
+        opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+        from {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateY(-120vh);
+            opacity: 0;
+        }
+    }
+
+    .confetti {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: red;
+        animation: confettiFall 2.5s linear forwards;
+    }
+
+    @keyframes confettiFall {
+        from {
+            transform: translateY(0) rotate(0deg);
+            opacity: 1;
+        }
+        to {
+            transform: translateY(100vh) rotate(720deg);
+            opacity: 0;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Will you be my Valentine? 💘</h1>
+    <div id="message"></div>
+
+    <button id="yes">Yes 💖</button>
+    <button id="no">No 🙃</button>
+
+    <div id="gif">
+        <img src="https://media.tenor.com/F7Cd9OI_XRQAAAAM/kid-meme.gif" width="280">
+    </div>
+</div>
+
+<script>
+    const yesBtn = document.getElementById("yes");
+    const noBtn = document.getElementById("no");
+    const message = document.getElementById("message");
+    const gif = document.getElementById("gif");
+
+    let yesScale = 1;
+    let noClicks = 0;
+
+    const messages = [
+        "Are you sure? 😳",
+        "Think again 🥺",
+        "Come onnn 💔",
+        "Destiny says yes 💞",
+    ];
+
+    // NO click → YES grows (mobile friendly)
+    noBtn.addEventListener("click", () => {
+        yesScale += 0.18;
+        yesBtn.style.transform = `scale(${yesScale})`;
+        message.innerText = messages[noClicks % messages.length];
+        noClicks++;
+        spawnHeart();
+    });
+
+    // YES click → confetti + gif
+    yesBtn.addEventListener("click", () => {
+        gif.style.display = "block";
+        message.innerText = "YAYYY 💃🕺💍";
+        launchConfetti();
+    });
+
+    function spawnHeart() {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerText = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.bottom = "-20px";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 3000);
+    }
+
+    function launchConfetti() {
+        for (let i = 0; i < 80; i++) {
+            const confetti = document.createElement("div");
+            confetti.className = "confetti";
+            confetti.style.left = Math.random() * 100 + "vw";
+            confetti.style.background =
+                `hsl(${Math.random() * 360}, 100%, 50%)`;
+            confetti.style.animationDuration =
+                (Math.random() * 1 + 2) + "s";
+            document.body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 3000);
+        }
+    }
+</script>
+
+</body>
+</html>
