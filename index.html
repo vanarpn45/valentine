@@ -110,7 +110,8 @@
 <body>
 
 <div class="container">
-    <h1>Will you be my Valentine? 💘</h1>
+    <!-- Name added here -->
+    <h1>Chandrika, will you be my Valentine? 💘</h1>
     <div id="message"></div>
 
     <button id="yes">Yes 💖</button>
@@ -121,11 +122,15 @@
     </div>
 </div>
 
+<!-- Celebration Sound -->
+<audio id="celebrationSound" src="https://assets.mixkit.co/sfx/preview/mixkit-party-horn-695.mp3"></audio>
+
 <script>
     const yesBtn = document.getElementById("yes");
     const noBtn = document.getElementById("no");
     const message = document.getElementById("message");
     const gif = document.getElementById("gif");
+    const sound = document.getElementById("celebrationSound");
 
     let yesScale = 1;
     let noClicks = 0;
@@ -137,7 +142,7 @@
         "Destiny says yes 💞",
     ];
 
-    // NO click → YES grows (mobile friendly)
+    // NO click → YES grows
     noBtn.addEventListener("click", () => {
         yesScale += 0.18;
         yesBtn.style.transform = `scale(${yesScale})`;
@@ -146,10 +151,12 @@
         spawnHeart();
     });
 
-    // YES click → confetti + gif
+    // YES click → confetti + gif + sound
     yesBtn.addEventListener("click", () => {
         gif.style.display = "block";
         message.innerText = "YAYYY 💃🕺💍";
+        sound.currentTime = 0;
+        sound.play();
         launchConfetti();
     });
 
